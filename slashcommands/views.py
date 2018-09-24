@@ -6,6 +6,7 @@ import gspread
 import json
 from oauth2client.service_account import ServiceAccountCredentials
 import os
+import re
 from utils import gsheet, slack
 
 
@@ -16,7 +17,7 @@ def walkup(request):
     for keyvalue in body_decoded.split('&'):
         key, value = keyvalue.split('=')
         parsed_response[key] = unquote(value)
-    text = parsed_response['text'].replace('+', '')
+    text = parsed_response['text'].replace('+', ' ')
     response_data = {
         'response_type': 'ephemeral',
         'text': 'Walk up successfully recorded',
@@ -26,13 +27,14 @@ def walkup(request):
             }
         ]
     }
-    print(text)
-    user_id, description = text.split()
     now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    user_id, description = text.split()
+    user_id = re.findall(r'@([^\|]+)\|', user_id)[0]
+    person = slack.get_username(user_id) if user_id else None
     gsheet_data = [
         now_str,
         slack.get_username(parsed_response['user_id']),
-        slack.get_username(user_id),
+        person,
         description
     ]
     print(gsheet_data)
