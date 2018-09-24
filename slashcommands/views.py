@@ -5,7 +5,7 @@ import json
 
 
 @csrf_exempt
-def slash(request):
+def walkup(request):
     body_decoded = request.body.decode('utf-8')
     parsed_response = {}
     for keyvalue in body_decoded.split('&'):

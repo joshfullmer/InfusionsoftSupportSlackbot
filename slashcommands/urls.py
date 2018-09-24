@@ -4,5 +4,5 @@ from . import views
 
 app_name = 'slashcommands'
 urlpatterns = [
-    path('', views.slash, name='slash')
+    path('walkup', views.walkup, name='walkup'),
 ]
