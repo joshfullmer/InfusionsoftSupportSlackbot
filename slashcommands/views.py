@@ -1,5 +1,5 @@
 import datetime
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse
 from django.utils.http import unquote
 from django.views.decorators.csrf import csrf_exempt
 import gspread
@@ -27,7 +27,9 @@ def walkup(request):
             'response_type': 'ephemeral',
             'text': 'Please use the format: "[@user] [description]"',
         }
-        return HttpResponseBadRequest(response_data)
+        return HttpResponse(
+            response_data,
+            content_type='application/json')
     now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     gsheet_data = [
         now_str,
