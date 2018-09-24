@@ -28,7 +28,7 @@ def walkup(request):
             'text': 'Please use the format: "[@user] [description]"',
         }
         return HttpResponse(
-            response_data,
+            json.dumps(response_data),
             content_type='application/json')
     now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     gsheet_data = [
