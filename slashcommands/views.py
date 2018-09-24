@@ -28,16 +28,19 @@ def walkup(request):
         ]
     }
     now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    user_id, description = text.split()
-    user_id = re.findall(r'@([^\|]+)\|', user_id)[0]
-    person = slack.get_username(user_id) if user_id else None
+    user_id = re.findall(r'@([^\|]+)\|', text)[0]
+    if user_id:
+        person = slack.get_username(user_id)
+        description = ' '.join(text.split()[1:-1])
+    else:
+        person = None
+        description = text
     gsheet_data = [
         now_str,
         slack.get_username(parsed_response['user_id']),
         person,
         description
     ]
-    print(gsheet_data)
     gs = gsheet.GSheet('1cUsX-KP7yqsqDw-SNS8AEVp8c4prvjxjgA_wejrPxVY')
     gs.add_row(gsheet_data)
     return HttpResponse(
