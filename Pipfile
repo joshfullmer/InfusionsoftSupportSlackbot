@@ -12,6 +12,8 @@ gunicorn = "*"
 django-heroku = "*"
 "psycopg2" = "*"
 dj-database-url = "*"
+gspread = "*"
+"oauth2client" = "*"
 
 
 [dev-packages]
