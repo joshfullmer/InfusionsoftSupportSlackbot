@@ -26,6 +26,7 @@ def walkup(request):
             }
         ]
     }
+    print(text)
     user_id, description = text.split()
     now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     gsheet_data = [
