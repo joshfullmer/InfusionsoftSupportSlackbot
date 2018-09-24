@@ -38,6 +38,8 @@ def walkup(request):
         description
     ]
     print(gsheet_data)
+    gs = gsheet.GSheet('1cUsX-KP7yqsqDw-SNS8AEVp8c4prvjxjgA_wejrPxVY')
+    gs.add_row(gsheet_data)
     return HttpResponse(
         json.dumps(response_data),
         content_type='application/json')
