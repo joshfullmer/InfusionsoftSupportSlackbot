@@ -1,4 +1,5 @@
 import requests
+from urllib.parse import urlencode
 
 
 SLACK_OAUTH_TOKEN = ('xoxp-437909661060-439459703494-437913616996-'
@@ -14,9 +15,11 @@ SLACK_API_URL = 'https://slack.com/api/'
 def get_username(user_id):
     url = SLACK_API_URL
     url += 'users.profile.get'
-    url = add_token(url)
-    url += f'&user={user_id}'
-
+    params = urlencode({
+        'token': SLACK_OAUTH_TOKEN,
+        'user': user_id,
+    })
+    url = url + '&' + params
     response = requests.get(url, headers=headers)
     username = response.json().get('profile').get('real_name')
     return username
