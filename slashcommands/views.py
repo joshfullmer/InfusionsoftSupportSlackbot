@@ -21,7 +21,7 @@ def walkup(request):
     user_id = re.findall(r'@([^\|]+)\|', text)
     if user_id:
         person = slack.get_username(user_id[0])
-        description = ' '.join(text.split()[1:-1])
+        description = ' '.join(text.split()[1:])
     else:
         response_data = {
             'response_type': 'ephemeral',
