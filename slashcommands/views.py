@@ -28,9 +28,9 @@ def walkup(request):
         ]
     }
     now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    user_id = re.findall(r'@([^\|]+)\|', text)[0]
+    user_id = re.findall(r'@([^\|]+)\|', text)
     if user_id:
-        person = slack.get_username(user_id)
+        person = slack.get_username(user_id[0])
         description = ' '.join(text.split()[1:-1])
     else:
         person = None
