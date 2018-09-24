@@ -21,9 +21,7 @@ def get_username(user_id):
     })
     url = url + '&' + params
     response = requests.get(url, headers=headers)
-    username = response.json().get('profile').get('real_name')
+    print(response)
+    r_json = response.json()
+    username = r_json.get('profile').get('real_name')
     return username
-
-
-def add_token(url):
-    return url + f'?token={SLACK_OAUTH_TOKEN}'
