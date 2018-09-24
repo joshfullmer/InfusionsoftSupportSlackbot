@@ -19,7 +19,7 @@ def get_username(user_id):
         'token': SLACK_OAUTH_TOKEN,
         'user': user_id,
     })
-    url = url + '&' + params
+    url = url + '?' + params
     response = requests.get(url, headers=headers)
     print(response)
     r_json = response.json()
