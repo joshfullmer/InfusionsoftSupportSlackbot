@@ -44,7 +44,7 @@ def walkup(request):
     ]
 
     # Add to Google Sheet
-    gs = gsheet.GSheet('1cUsX-KP7yqsqDw-SNS8AEVp8c4prvjxjgA_wejrPxVY')
+    gs = gsheet.GSheet('1cUsX-KP7yqsqDw-SNS8AEVp8c4prvjxjgA_wejrPxVY', 'Data')
     gs.add_row(gsheet_data)
 
     # HTTP Response to Slack
