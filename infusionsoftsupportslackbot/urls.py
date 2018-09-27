@@ -18,7 +18,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+from . import views
+
 urlpatterns = [
+    path('oauth/', include('slackoauth.urls', namespace='slackoauth')),
     path('slash/', include('slashcommands.urls', namespace='slashcommands')),
     path('admin/', admin.site.urls),
+    path('', views.home, name='home')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
