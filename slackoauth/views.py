@@ -17,7 +17,7 @@ def auth(request):
         }
         url = 'https://slack.com/api/oauth.access'
         response = requests.get(url, json=data)
-        print(response.body)
+        print(response.text)
         r_json = response.json()
         if r_json.get('access_token'):
             SlackTeam.object.get_or_create(
