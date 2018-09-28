@@ -25,7 +25,7 @@ def auth(request):
         r_json = response.json()
         print(r_json)
         if r_json.get('access_token'):
-            SlackTeam.object.get_or_create(
+            SlackTeam.objects.get_or_create(
                 team_id=request.GET.get('team_id'),
                 access_token=r_json.get('access_token'),
                 refresh_token=r_json.get('refresh_token'),
