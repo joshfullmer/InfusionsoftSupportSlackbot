@@ -20,6 +20,7 @@ def auth(request):
         base_url = 'https://slack.com/api/oauth.access'
         url = base_url + '&' + data
         response = requests.post(url, headers=headers, json=data)
+        print(response, response.reason)
         r_json = response.json()
         print(r_json)
         if r_json.get('access_token'):
