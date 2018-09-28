@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.utils.http import urlencode
 import json
 import os
 import requests
@@ -8,15 +9,17 @@ from .models import SlackTeam
 
 def auth(request):
     if request.GET.get('code'):
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
         uri = 'https://infusionsoftsupportslackbot.herokuapp.com/oauth/'
-        data = {
+        data = urlencode({
             'client_id': os.environ['SLACK_CLIENT_ID'],
             'client_secret': os.environ['SLACK_CLIENT_SECRET'],
             'code': request.GET.get('code'),
             'request_uri': uri,
-        }
-        url = 'https://slack.com/api/oauth.access'
-        response = requests.post(url, json=data)
+        })
+        base_url = 'https://slack.com/api/oauth.access'
+        url = base_url + '&' + data
+        response = requests.post(url, headers=headers, json=data)
         r_json = response.json()
         print(r_json)
         if r_json.get('access_token'):
