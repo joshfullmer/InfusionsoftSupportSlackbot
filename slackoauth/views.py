@@ -15,7 +15,7 @@ def auth(request):
             'client_id': os.environ['SLACK_CLIENT_ID'],
             'client_secret': os.environ['SLACK_CLIENT_SECRET'],
             'code': request.GET.get('code'),
-            'request_uri': uri,
+            'redirect_uri': uri,
         })
         base_url = 'https://slack.com/api/oauth.access'
         url = base_url + '?' + data
