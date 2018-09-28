@@ -8,7 +8,7 @@ from .models import SlackTeam
 
 def auth(request):
     if request.GET.get('code'):
-        uri = 'https://infusionsoftsupportslackbot.herokuapp.com/oauth/'
+        uri = 'https%3A%2F%2Finfusionsoftsupportslackbot.herokuapp.com%2Foauth%2F'
         data = {
             'client_id': os.environ['SLACK_CLIENT_ID'],
             'client_secret': os.environ['SLACK_CLIENT_SECRET'],
