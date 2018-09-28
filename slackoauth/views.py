@@ -16,7 +16,7 @@ def auth(request):
             'code': request.GET.get('code'),
         }
         url = 'https://slack.com/api/oauth.access'
-        response = requests.get(url, json=data)
+        response = requests.post(url, json=data)
         print(response, response.reason)
         if response.status_code == 403:
             return HttpResponse(response.text)
