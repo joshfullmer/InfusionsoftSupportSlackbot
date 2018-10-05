@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 
-# csrf_exempt
+@csrf_exempt
 def event(request):
     if request.POST.get('challenge'):
         return HttpResponse(
