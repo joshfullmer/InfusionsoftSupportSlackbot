@@ -3,11 +3,11 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 
-@csrf_exempt
+# csrf_exempt
 def event(request):
-    if request.GET.get('challenge'):
+    if request.POST.get('challenge'):
         return HttpResponse(
-            json.dumps({'challenge': request.GET.get('challenge')}),
+            json.dumps({'challenge': request.POST.get('challenge')}),
             content_type='application/json'
         )
-    return HttpResponse(request.GET.get('challenge'))
+    return HttpResponse(request.POST.get('challenge'))
