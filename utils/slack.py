@@ -27,3 +27,17 @@ def get_username(team_id, user_id):
     r_json = response.json()
     username = r_json.get('profile').get('real_name')
     return username
+
+
+def get_channel_name(team_id, channel_id):
+    url = SLACK_API_URL
+    url += 'channels.info'
+    params = urlencode({
+        'token': SlackTeam.get_token(team_id),
+        'channel': channel_id,
+    })
+    url = url + '?' + params
+    response = requests.get(url, headers=headers)
+    r_json = response.json()
+    channel_name = r_json.get('channel').get('name')
+    return channel_name
