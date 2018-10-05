@@ -26,8 +26,9 @@ def event(request):
         message = body.get('event')
         message_id = message.get('ts')
 
-        ts = dt.datetime.fromtimestamp(message.get('ts'))
-        ts_str = ts.strftime('%Y-%m-%d %H:%M:S')
+        ts = float(message.get('ts'))
+        ts_dt = dt.datetime.fromtimestamp(ts)
+        ts_str = ts_dt.strftime('%Y-%m-%d %H:%M:S')
 
         team_id = body.get('team_id')
         username = get_username(team_id, message.get('user'))
