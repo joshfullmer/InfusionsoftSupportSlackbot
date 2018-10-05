@@ -36,9 +36,11 @@ def walkup(request):
 
     # Prepare data to add to Google Sheet
     now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    team_id = parsed_response['team_id']
+    user_id = parsed_response['user_id']
     gsheet_data = [
         now_str,
-        slack.get_username(parsed_response['user_id']),
+        slack.get_username(team_id, user_id),
         person,
         description
     ]

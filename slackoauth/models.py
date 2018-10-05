@@ -5,3 +5,11 @@ class SlackTeam(models.Model):
     # TODO: add scope, user_id, team_name to model
     team_id = models.CharField(max_length=50)
     access_token = models.CharField(max_length=100)
+
+    @classmethod
+    def get_token(cls, team_id):
+        slack_team = SlackTeam.objects.get_or_none(cls.team_id == team_id)
+        if slack_team:
+            return slack_team.access_token
+        else:
+            return None

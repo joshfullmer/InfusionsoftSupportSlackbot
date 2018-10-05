@@ -1,3 +1,6 @@
+from slackoauth.models import SlackTeam
+
+
 import requests
 from urllib.parse import urlencode
 
@@ -12,11 +15,11 @@ headers = {
 SLACK_API_URL = 'https://slack.com/api/'
 
 
-def get_username(user_id):
+def get_username(team_id, user_id):
     url = SLACK_API_URL
     url += 'users.profile.get'
     params = urlencode({
-        'token': SLACK_OAUTH_TOKEN,
+        'token': SlackTeam.get_token(team_id),
         'user': user_id,
     })
     url = url + '?' + params
