@@ -5,7 +5,8 @@ import json
 
 @csrf_exempt
 def event(request):
-    challenge = request.POST.get('challenge')
+    body = json.loads(request.body)
+    challenge = body.get('challenge')
     print(request.body)
     print(challenge)
     if challenge:
