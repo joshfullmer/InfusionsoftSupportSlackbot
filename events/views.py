@@ -60,7 +60,7 @@ def event(request):
 
         gs = GSheet(
             '1heNDfpCkgHF-CPUJFbFAc0Us9I_BWde1KrFU9yaVowc',
-            'Message'
+            'Messages'
         )
         gs.add_row(data)
         return HttpResponse('')
