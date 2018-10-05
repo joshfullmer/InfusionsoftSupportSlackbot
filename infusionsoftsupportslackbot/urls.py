@@ -21,6 +21,7 @@ from django.urls import include, path
 from . import views
 
 urlpatterns = [
+    path('event/', include('events.urls', namespace='events')),
     path('oauth/', include('slackoauth.urls', namespace='slackoauth')),
     path('slash/', include('slashcommands.urls', namespace='slashcommands')),
     path('admin/', admin.site.urls),
