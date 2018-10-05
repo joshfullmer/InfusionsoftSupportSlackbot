@@ -10,4 +10,4 @@ def event(request):
             json.dumps({'challenge': request.GET.get('challenge')}),
             content_type='application/json'
         )
-    print(request.GET)
+    return HttpResponse(request.GET.get('challenge'))
