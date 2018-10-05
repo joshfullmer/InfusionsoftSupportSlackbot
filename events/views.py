@@ -5,9 +5,11 @@ import json
 
 @csrf_exempt
 def event(request):
-    if request.POST.get('challenge'):
+    print(request.POST.get('body'))
+    challenge = request.POST.get('body').get('challenge')
+    if challenge:
         return HttpResponse(
-            json.dumps({'challenge': request.POST.get('challenge')}),
-            content_type='application/json'
+            json.dumps({'challenge': challenge}),
+            content_type='application/json',
         )
-    return HttpResponse(request.POST.get('challenge'))
+    return HttpResponse(challenge)
