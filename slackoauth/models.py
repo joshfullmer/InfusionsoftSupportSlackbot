@@ -8,7 +8,10 @@ class SlackTeam(models.Model):
 
     @classmethod
     def get_token(cls, team_id):
-        slack_team = SlackTeam.objects.get_or_none(cls.team_id == team_id)
+        try:
+            slack_team = SlackTeam.objects.get(team_id=team_id)
+        except SlackTeam.DoesNotExist:
+            slack_team = None
         if slack_team:
             return slack_team.access_token
         else:

@@ -13,6 +13,7 @@ from utils.slack import get_username
 @csrf_exempt
 def event(request):
     body = json.loads(request.body)
+    print(body)
     challenge = body.get('challenge')
     if challenge:
         return HttpResponse(
