@@ -36,7 +36,8 @@ def event(request):
             ts = float(message.get('ts'))
 
             arizona = timezone('US/Arizona')
-            ts_dt_utc = dt.datetime.fromtimestamp(ts, tzinfo=utc)
+            ts_dt = dt.datetime.fromtimestamp(ts)
+            ts_dt_utc = utc.localize(ts_dt)
             ts_dt_az = ts_dt_utc.astimezone(arizona)
 
             ts_str = ts_dt_az.strftime('%Y-%m-%d %H:%M:%S')
