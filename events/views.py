@@ -2,6 +2,7 @@ import datetime as dt
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from pytz import timezone, utc
 import os
 import re
 
@@ -33,8 +34,12 @@ def event(request):
             message_id = message.get('ts')
 
             ts = float(message.get('ts'))
-            ts_dt = dt.datetime.fromtimestamp(ts)
-            ts_str = ts_dt.strftime('%Y-%m-%d %H:%M:%S')
+
+            arizona = timezone('US/Arizona')
+            ts_dt_utc = dt.datetime.fromtimestamp(ts, tzinfo=utc)
+            ts_dt_az = ts_dt_utc.astimezone(arizona)
+
+            ts_str = ts_dt_az.strftime('%Y-%m-%d %H:%M:%S')
 
             username = get_username(team_id, message.get('user'))
 
