@@ -19,9 +19,10 @@ def walkup(request):
     text = parsed_response['text'].replace('+', ' ')
 
     # Check if Slack User was mentioned
+    team_id = parsed_response['team_id']
     user_id = re.findall(r'@([^\|]+)\|', text)
     if user_id:
-        person = slack.get_username(user_id[0])
+        person = slack.get_username(team_id, user_id[0])
         description = ' '.join(text.split()[1:])
 
     # If not, respond with an error message
@@ -36,7 +37,6 @@ def walkup(request):
 
     # Prepare data to add to Google Sheet
     now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    team_id = parsed_response['team_id']
     user_id = parsed_response['user_id']
     gsheet_data = [
         now_str,
