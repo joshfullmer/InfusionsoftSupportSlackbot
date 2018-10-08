@@ -51,6 +51,10 @@ def parse_message(message, team_id):
     if message.get('message'):
         message = message.get('message')
     parent_message_id = message.get('thread_ts')
+    if not parent_message_id:
+        previous_message = message.get('previous_message')
+        if previous_message:
+            parent_message_id = previous_message.get('thread_ts')
     message_id = message.get('ts')
 
     ts = float(message.get('ts'))
