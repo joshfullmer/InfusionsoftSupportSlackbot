@@ -31,6 +31,5 @@ class GSheet:
         row_num = message_ids.index(message_id) + 1
         self.insert_row(data, index=row_num)
 
-
     def delete_message(self, data):
         pass

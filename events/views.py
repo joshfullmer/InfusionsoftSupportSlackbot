@@ -60,6 +60,8 @@ def event(request):
 
             data, tab = parse_message(message, team_id)
 
+            print(data, tab)
+
             gs = GSheet(
                 '1heNDfpCkgHF-CPUJFbFAc0Us9I_BWde1KrFU9yaVowc',
                 tab
