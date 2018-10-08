@@ -102,4 +102,7 @@ def parse_message(message, team_id):
             categories,
         ]
         tab = 'Messages'
+
+    if message.get('deleted_ts'):
+        data = [message.get('deleted_ts')]
     return data, tab
