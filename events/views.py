@@ -10,6 +10,35 @@ from utils.categorize import categorize
 from utils.gsheet import GSheet
 from utils.slack import get_username, get_channel_name
 
+SKIP_SUBTYPES = [
+    'bot_message',
+    'channel_archive',
+    'channel_join',
+    'channel_leave',
+    'channel_name',
+    'channel_purpose',
+    'channel_topic',
+    'channel_unarchive',
+    'file_comment',
+    'file_mention',
+    'file_share',
+    'group_archive',
+    'group_join',
+    'group_leave',
+    'group_name',
+    'group_purpose',
+    'group_topic',
+    'group_unarchive',
+    'me_message',
+    'message_changed',
+    'message_deleted',
+    'message_replied',
+    'pinned_item',
+    'reply_broadcast',
+    'thread_broadcast',
+    'unpinned_item'
+]
+
 
 @csrf_exempt
 def event(request):
@@ -28,6 +57,11 @@ def event(request):
 
     if body.get('token') == os.environ['SLACK_VERIFICATION_TOKEN']:
         message = body.get('event')
+
+        if message.get('subtype'):
+            # TODO handle when messages are deleted or edited
+            return HttpResponse('')
+
         channel_name = get_channel_name(team_id, message.get('channel'))
         if channel_name == 'customersupport':
 
