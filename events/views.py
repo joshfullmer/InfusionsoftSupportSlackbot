@@ -57,8 +57,9 @@ def event(request):
 
     if body.get('token') == os.environ['SLACK_VERIFICATION_TOKEN']:
         message = body.get('event')
+        subtype = message.get('subtype')
 
-        if message.get('subtype'):
+        if subtype:
             # TODO handle when messages are deleted or edited
             return HttpResponse('')
 
@@ -78,9 +79,9 @@ def event(request):
 
             username = get_username(team_id, message.get('user'))
 
-            matches = re.findall(r'<@(.*?)>', message.get('text'))
-
             text = message.get('text')
+
+            matches = re.findall(r'<@(.*?)>', text)
 
             if matches:
                 repl = {}
@@ -93,18 +94,29 @@ def event(request):
 
             categories = categorize(text)
 
-            data = [
-                message_id,
-                ts_str,
-                username,
-                text,
-                has_replies,
-                categories,
-            ]
+            if message.get('thread_ts'):
+                data = [
+                    message_id,
+                    ts_str,
+                    message.get('thread_ts'),
+                    username,
+                    text
+                ]
+                tab = 'Replies'
+            else:
+                data = [
+                    message_id,
+                    ts_str,
+                    username,
+                    text,
+                    has_replies,
+                    categories,
+                ]
+                tab = 'Messages'
 
             gs = GSheet(
                 '1heNDfpCkgHF-CPUJFbFAc0Us9I_BWde1KrFU9yaVowc',
-                'Messages'
+                tab
             )
             gs.add_row(data)
             return HttpResponse('')
