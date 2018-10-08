@@ -62,18 +62,24 @@ def parse_message(message, team_id):
 
     ts_str = ts_dt_az.strftime('%Y-%m-%d %H:%M:%S')
 
-    username = get_username(team_id, message.get('user'))
+    user = message.get('user')
+
+    if user:
+        username = get_username(team_id, message.get('user'))
+    else:
+        username = None
 
     text = message.get('text')
 
-    matches = re.findall(r'<@(.*?)>', text)
+    if text:
+        matches = re.findall(r'<@(.*?)>', text)
 
-    if matches:
-        repl = {}
-        for match in matches:
-            repl[match] = get_username(team_id, match)
-        for user_id, user in repl.items():
-            text = text.replace(f'<@{user_id}>', user)
+        if matches:
+            repl = {}
+            for match in matches:
+                repl[match] = get_username(team_id, match)
+            for user_id, user in repl.items():
+                text = text.replace(f'<@{user_id}>', user)
 
     if parent_message_id and not parent_message_id == message_id:
         data = [
