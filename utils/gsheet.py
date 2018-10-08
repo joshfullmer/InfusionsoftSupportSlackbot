@@ -30,7 +30,10 @@ class GSheet:
         message_ids = self.worksheet.col_values(1)
         row_num = message_ids.index(message_id) + 1
         self.worksheet.insert_row(data, index=row_num)
-        self.worksheet.delete_row(data, index=row_num+1)
+        self.worksheet.delete_row(index=row_num+1)
 
     def delete_message(self, data):
-        pass
+        message_id = data[0]
+        message_ids = self.worksheet.col_values(1)
+        row_num = message_ids.index(message_id) + 1
+        self.worksheet.delete_row(row_num)
