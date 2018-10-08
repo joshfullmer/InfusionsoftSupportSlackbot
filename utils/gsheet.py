@@ -27,9 +27,9 @@ class GSheet:
 
     def update_message(self, data):
         message_id = data[0]
-        message_ids = self.col_values(1)
+        message_ids = self.worksheet.col_values(1)
         row_num = message_ids.index(message_id) + 1
-        self.insert_row(data, index=row_num)
+        self.worksheet.insert_row(data, index=row_num)
 
     def delete_message(self, data):
         pass
