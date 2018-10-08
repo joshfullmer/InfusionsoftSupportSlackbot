@@ -92,7 +92,7 @@ def parse_message(message, team_id):
         tab = 'Replies'
     else:
         has_replies = False
-        categories = categorize(text)
+        categories = categorize(text) if text else None
         data = [
             message_id,
             ts_str,
