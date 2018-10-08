@@ -49,6 +49,8 @@ def get_channel_name(team_id, channel_id):
 
 def parse_message(message, team_id):
     parent_message_id = message.get('thread_ts')
+    if message.get('message'):
+        message = message.get('message')
     message_id = message.get('ts')
 
     ts = float(message.get('ts'))
