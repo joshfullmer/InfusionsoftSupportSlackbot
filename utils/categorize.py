@@ -40,4 +40,6 @@ def categorize(message):
         for keyword in keywords:
             if keyword in message.lower():
                 message_cats.add(category)
+    if not message_cats:
+        return None
     return ','.join(message_cats)
