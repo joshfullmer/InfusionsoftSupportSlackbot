@@ -1,6 +1,5 @@
 from django.http import HttpResponse
 from django.utils.http import urlencode
-import json
 import os
 import requests
 
@@ -34,7 +33,4 @@ def auth(request):
     if request.GET.get('error'):
         pass
 
-    response_data = {}
-    return HttpResponse(
-        json.dumps(response_data),
-        content_type='application/json')
+    return HttpResponse('Thanks for adding the Infusionsoft Support Slackbot!')

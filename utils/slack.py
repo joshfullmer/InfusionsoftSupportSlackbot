@@ -39,5 +39,6 @@ def get_channel_name(team_id, channel_id):
     url = url + '?' + params
     response = requests.get(url, headers=headers)
     r_json = response.json()
+    print(r_json)
     channel_name = r_json.get('channel').get('name')
     return channel_name
