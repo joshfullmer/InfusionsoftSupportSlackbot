@@ -1,8 +1,12 @@
-from slackoauth.models import SlackTeam
-
-
+import datetime as dt
+from pytz import timezone, utc
+import re
 import requests
 from urllib.parse import urlencode
+
+
+from slackoauth.models import SlackTeam
+from utils.categorize import categorize
 
 
 SLACK_OAUTH_TOKEN = ('xoxp-437909661060-439459703494-437913616996-'
@@ -39,6 +43,55 @@ def get_channel_name(team_id, channel_id):
     url = url + '?' + params
     response = requests.get(url, headers=headers)
     r_json = response.json()
-    print(r_json)
     channel_name = r_json.get('channel').get('name')
     return channel_name
+
+
+def parse_message(message, team_id):
+    parent_message_id = message.get('thread_ts')
+    message_id = message.get('ts')
+
+    ts = float(message.get('ts'))
+
+    arizona = timezone('US/Arizona')
+    ts_dt = dt.datetime.fromtimestamp(ts)
+    ts_dt_utc = utc.localize(ts_dt)
+    ts_dt_az = ts_dt_utc.astimezone(arizona)
+
+    ts_str = ts_dt_az.strftime('%Y-%m-%d %H:%M:%S')
+
+    username = get_username(team_id, message.get('user'))
+
+    text = message.get('text')
+
+    matches = re.findall(r'<@(.*?)>', text)
+
+    if matches:
+        repl = {}
+        for match in matches:
+            repl[match] = get_username(team_id, match)
+        for user_id, user in repl.items():
+            text = text.replace(f'<@{user_id}>', user)
+
+    if parent_message_id and not parent_message_id == message_id:
+        data = [
+            message_id,
+            ts_str,
+            parent_message_id,
+            username,
+            text,
+        ]
+        tab = 'Replies'
+    else:
+        has_replies = False
+        categories = categorize(text)
+        data = [
+            message_id,
+            ts_str,
+            username,
+            text,
+            has_replies,
+            categories,
+        ]
+        tab = 'Messages'
+    return data, tab
