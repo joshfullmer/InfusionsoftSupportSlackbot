@@ -68,7 +68,6 @@ def event(request):
             )
 
             if subtype:
-                # TODO handle when messages are deleted or edited
                 if subtype == 'message_changed':
                     gs.update_message(data)
                 if subtype == 'message_deleted':
